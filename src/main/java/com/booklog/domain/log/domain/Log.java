@@ -1,7 +1,7 @@
 package com.booklog.domain.log.domain;
 
 import com.booklog.BaseEntity;
-import com.booklog.domain.comment.Comment;
+import com.booklog.domain.comment.domain.Comment;
 import com.booklog.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +38,9 @@ public class Log extends BaseEntity {
     @Column(length = 5000, nullable = false)
     private String content;
 
+    @Column(name = "likes_count")
+    private long likesCount;
+
     @OneToMany
     private List<Comment> comments = new ArrayList<>();
 
@@ -53,7 +56,7 @@ public class Log extends BaseEntity {
         this.content = content;
     }
 
-    public void update(String title, String bookName, String author,String content) {
+    public void updateLog(String title, String bookName, String author,String content) {
         this.title = title;
         this.bookName = bookName;
         this.author = author;
@@ -62,5 +65,13 @@ public class Log extends BaseEntity {
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
+    }
+    public long addLike() {
+        this.likesCount += 1;
+        return this.likesCount;
+    }
+    public long subtractLike() {
+        this.likesCount -= 1;
+        return this.likesCount;
     }
 }
