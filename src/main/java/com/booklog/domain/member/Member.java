@@ -1,7 +1,7 @@
-package com.booklog.member;
+package com.booklog.domain.member;
 
 import com.booklog.BaseEntity;
-import com.booklog.log.Log;
+import com.booklog.domain.log.domain.Log;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +21,12 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 20, nullable = false)
     private String name;
+    @Column(length = 20, nullable = false)
     private String nickname;
+    @Column(nullable = false)
     private String email;
-
     @OneToMany(mappedBy = "member")
     private List<Log> logs = new ArrayList<>();
 
@@ -39,4 +41,9 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.email = email;
     }
+
+    public void addLog(Log log) {
+        this.logs.add(log);
+    }
+
 }
