@@ -5,9 +5,8 @@ import com.booklog.domain.comment.domain.Comment;
 import com.booklog.domain.comment.dto.CommentCreateDto;
 import com.booklog.domain.log.dao.LogRepository;
 import com.booklog.domain.log.domain.Log;
-import com.booklog.domain.log.dto.LogCreateDto;
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.domain.Member;
+import com.booklog.domain.member.dao.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +18,11 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
     private final LogRepository logRepository;
-    public long saveComment(CommentCreateDto commentCreateDto) {
-        long memberId = commentCreateDto.getMemberId();
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        Log log = logRepository.findById(commentCreateDto.getLogId()).orElseThrow();
+    public long saveComment(String text, Member member, Long logId) {
+        Log log = logRepository.findById(logId).orElseThrow();
         Comment comment = Comment.builder()
                 .member(member)
-                .comment(commentCreateDto.getComment())
+                .comment(text)
                 .build();
 
         log.addComment(comment);
