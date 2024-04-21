@@ -1,7 +1,7 @@
 package com.booklog.domain.comment.domain;
 
 import com.booklog.BaseEntity;
-import com.booklog.domain.member.Member;
+import com.booklog.domain.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

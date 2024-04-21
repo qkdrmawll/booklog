@@ -2,9 +2,8 @@ package com.booklog.domain.like.application;
 
 import com.booklog.domain.like.dao.LikeRepository;
 import com.booklog.domain.like.domain.Like;
-import com.booklog.domain.like.dto.LikeDto;
 import com.booklog.domain.log.domain.Log;
-import com.booklog.domain.member.Member;
+import com.booklog.domain.member.domain.Member;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

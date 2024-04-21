@@ -1,6 +1,6 @@
 package com.booklog.domain.follow.domain;
 
-import com.booklog.domain.member.Member;
+import com.booklog.domain.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,8 @@
-package com.booklog.domain.member;
+package com.booklog.domain.member.domain;
 
 import com.booklog.BaseEntity;
 import com.booklog.domain.log.domain.Log;
+import com.booklog.domain.member.oauth.SessionUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,12 +22,19 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length = 20, nullable = false)
+
+    @Column(length = 20)
     private String name;
-    @Column(length = 20, nullable = false)
+
+    @Column(length = 20)
     private String nickname;
+
     @Column(nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "member")
     private List<Log> logs = new ArrayList<>();
 
@@ -46,4 +54,7 @@ public class Member extends BaseEntity {
         this.logs.add(log);
     }
 
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }
