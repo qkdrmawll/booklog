@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        a {
+            color: inherit; /* 부모 요소의 색상 상속 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>책 검색</h2>
+    </div>
+    <div class="row justify-content-center search-box"> <!-- Center aligning content and adding space -->
+        <div class="col-md-8">
+            <form th:action="@{/kakao/book/search}" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-lg" placeholder="책 제목 검색" name="query" id="query">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3" th:if="${not #lists.isEmpty(books)}"> <!-- Center aligning content -->
+        <div class="col-md-8"> <!-- Increased column width to 8 -->
+            <ul>
+                <li th:each="book : ${books}">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <!-- Thumbnail image -->
+                            <img th:src="${book.thumbnail}" alt="Thumbnail" class="img-thumbnail">
+                        </div>
+                        <div class="col-md-10">
+                            <h4>
+                                <a th:href="@{'/log/write?bookName=' + ${book.title} + '&author=' + ${#strings.replace(book.authors[0], ' ', '%20')}}" th:text="${book.title}"></a>
+                            </h4>
+                            <p>
+                                Authors:
+                                <span th:if="${book.authors}">
+                                    <span th:text="${#strings.listJoin(book.authors, ', ')}"></span>
+                                </span>
+                                <span th:unless="${book.authors}">
+                                    Unknown
+                                </span>
+                            </p>
+                            <p th:text="${'Contents: ' + book.contents}"></p>
+                            <p th:text="${'Publisher: ' + book.publisher}"></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
