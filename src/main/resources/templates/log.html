@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/blog/">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log페이지</title>
+    <style>
+        a {
+            color: inherit; /* 부모 요소의 색상 상속 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .log-area {
+            width: 75%;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+        .log {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .log-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .log-content {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .btn-like {
+            margin-right: 10px;
+        }
+        .comments {
+            margin-top: 20px;
+        }
+        .comment-input {
+            margin-top: 10px;
+        }
+        .book-info {
+            margin-bottom: 20px; /* Add margin below the book information */
+        }
+
+        .book-thumbnail {
+            width: 100%; /* Make the thumbnail image fill its container */
+        }
+
+
+        .vertical-line {
+            border-right: 1px solid #ccc; /* Color and style of the vertical line */
+            height: 100%; /* Make the line span the entire height of the container */
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="border-bottom lh-1 py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-4 pt-1">
+                <a class="link-secondary" href="#">Subscribe</a>
+            </div>
+            <div class="col-4 text-center">
+                <a class="blog-header-logo text-body-emphasis text-decoration-none" href="/">BOOKLOG</a>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <a class="link-secondary" href="#" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                </a>
+                <div th:if="${loggedInUser != null}">
+                    <p><a th:href="@{/profile/{memberEmail}(memberEmail=${loggedInUser.email})}" th:text="${loggedInUser.getName()}"></a></p>
+                    <!-- 다른 로그인 정보를 출력할 수 있도록 필요한 속성들을 추가 -->
+                </div>
+                <div th:unless="${loggedInUser != null}">
+                    <a class="btn btn-sm btn-outline-secondary" href="/oauth2/authorization/kakao">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+    <div class="log-area">
+        <div class="log">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="log-title" th:text="${log.title}">Post Title</h2>
+                    <div style="display: flex; align-items: center;">
+                        <span th:text="${log.getCreateDate()} + ' by ' + ' '">January 1, 2021 by </span>
+                        <a th:text="${log.getWriter()}" th:href="@{/profile/{memberEmail}(memberEmail=${log.getMember().getEmail()})}">qkdrmawll</a>
+                        <div th:unless="${log.getMember().email == loggedInUser.getEmail()}">
+                            <button class="btn btn-sm btn-outline-secondary" id="btn-save" href="/"
+                                    th:onclick="|location.href='@{/log/{logId}/edit(logId=${log.id})}'|"
+                                    style="margin-left: auto;">수정
+                            </button>
+                        </div>
+                    </div>
+                    <p class="log-content" th:text="${log.content}">
+                        로그 내용입니다.
+                    </p>
+                </div>
+                <div class="col-md-1">
+                    <div class="vertical-line"></div>
+                </div>
+                <div class="col-md-3">
+                    <img th:src="${log.thumbnail}" alt="Book Thumbnail" class="book-thumbnail">
+                    <div class="book-info">
+                        <p th:text="${log.getBookName()}">
+                            책 제목
+                        </p>
+                        <p th:text="${log.getAuthor()}">
+                            저자
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <form th:action="@{/like/{logId}(logId=${log.id})}" method="post">
+            <button type="submit" class="btn btn-outline-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                </svg>
+                <span th:text="${log.getLikesCount()}" class="visually-hidden">Button</span>
+            </button>
+        </form>
+        <div class="comments">
+            <h5>comments</h5>
+            <!-- Comments will be displayed here -->
+            <div class="comment-input">
+                <form th:action="@{'/' + ${log.id} + '/comment'}" method="post">
+                    <textarea class="form-control" rows="3" placeholder="Write a comment..." name="comment"></textarea>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary mt-2">Submit</button>
+                </form>
+            </div>
+            <div th:each="comment: ${log.getComments()}">
+                <p th:text="${comment.comment}">Comment Text</p>
+            </div>
+        </div>
+
+    </div>
+    <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+        <p class="mb-0">
+            <a href="#">Back to top</a>
+        </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
