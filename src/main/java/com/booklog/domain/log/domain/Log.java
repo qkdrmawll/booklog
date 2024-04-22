@@ -2,7 +2,7 @@ package com.booklog.domain.log.domain;
 
 import com.booklog.BaseEntity;
 import com.booklog.domain.comment.domain.Comment;
-import com.booklog.domain.member.Member;
+import com.booklog.domain.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +26,9 @@ public class Log extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Enumerated(EnumType.STRING)
+    private Visibility visibility;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -37,6 +40,9 @@ public class Log extends BaseEntity {
 
     @Column(length = 5000, nullable = false)
     private String content;
+
+    @Column(length = 100)
+    private String thumbnail;
 
     @Column(name = "likes_count")
     private long likesCount;
@@ -61,6 +67,10 @@ public class Log extends BaseEntity {
         this.bookName = bookName;
         this.author = author;
         this.content = content;
+    }
+
+    public String getWriter() {
+        return this.member.getName();
     }
 
     public void addComment(Comment comment) {

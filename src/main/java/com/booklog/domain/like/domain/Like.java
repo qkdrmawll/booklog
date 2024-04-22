@@ -1,7 +1,7 @@
 package com.booklog.domain.like.domain;
 
 import com.booklog.domain.log.domain.Log;
-import com.booklog.domain.member.Member;
+import com.booklog.domain.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
