@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeRepository extends JpaRepository<Like,Long> {
     boolean existsByMemberAndLog(Member member, Log log);
+    Like findByMemberAndLog(Member member, Log log);
     void deleteByMemberAndLog(Member member, Log log);
 }
