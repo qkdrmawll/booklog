@@ -5,17 +5,14 @@ import com.booklog.domain.comment.domain.Comment;
 import com.booklog.domain.comment.dto.CommentCreateDto;
 import com.booklog.domain.log.application.LogService;
 import com.booklog.domain.log.dao.LogRepository;
-import com.booklog.domain.log.domain.Log;
 import com.booklog.domain.log.dto.LogCreateDto;
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommentServiceTest {
@@ -39,22 +36,12 @@ class CommentServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = LogCreateDto.builder()
-                .memberId(1)
-                .title("test")
-                .author("tester")
-                .bookName("test")
-                .content("test")
-                .build();
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
 
-        logService.saveLog(logCreateDto);
+        Long logId = logService.saveLog(logCreateDto,member);
 
-        CommentCreateDto commentCreateDto = CommentCreateDto.builder()
-                .logId(1)
-                .memberId(1)
-                .comment("test comment").build();
-        commentService.saveComment(commentCreateDto);
-        Comment comment = commentRepository.findById(1L).orElseThrow();
+        Long commentId = commentService.saveComment("test comment",member,logId);
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
         Assertions.assertThat(comment.getComment()).isEqualTo("test comment");
     }
 }

@@ -1,8 +1,8 @@
 package com.booklog.domain.follow.application;
 
 import com.booklog.domain.follow.dao.FollowRepository;
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class FollowServiceTest {

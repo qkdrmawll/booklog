@@ -2,11 +2,10 @@ package com.booklog.domain.comment.application;
 
 import com.booklog.domain.comment.dao.CommentRepository;
 import com.booklog.domain.comment.domain.Comment;
-import com.booklog.domain.comment.dto.CommentCreateDto;
 import com.booklog.domain.log.dao.LogRepository;
 import com.booklog.domain.log.domain.Log;
-import com.booklog.domain.member.domain.Member;
 import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

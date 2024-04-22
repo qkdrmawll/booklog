@@ -3,15 +3,14 @@ package com.booklog.domain.log.application;
 import com.booklog.domain.log.dao.LogRepository;
 import com.booklog.domain.log.domain.Log;
 import com.booklog.domain.log.dto.LogCreateDto;
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LogServiceTest {
@@ -31,16 +30,10 @@ class LogServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = LogCreateDto.builder()
-                .memberId(1)
-                .title("test")
-                .author("tester")
-                .bookName("test")
-                .content("test")
-                .build();
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
 
-        long logId = logService.saveLog(logCreateDto);
+        long logId = logService.saveLog(logCreateDto,member);
         Log log = logRepository.findById(logId).get();
-        Assertions.assertThat(log.getAuthor()).isEqualTo("tester");
+        Assertions.assertThat(log.getAuthor()).isEqualTo("t");
     }
 }

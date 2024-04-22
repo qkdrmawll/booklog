@@ -1,7 +1,7 @@
 package com.booklog.domain.member;
 
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class MemberTest {
                 .nickname("test")
                 .build();
         memberRepository.save(member);
-        Optional<Member> find = memberRepository.findById(1L);
+        Optional<Member> find = memberRepository.findById(member.getId());
         Assertions.assertThat(member.getName()).isEqualTo(find.get().getName());
     }
 }

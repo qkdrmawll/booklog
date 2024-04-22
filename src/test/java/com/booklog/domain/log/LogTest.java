@@ -2,8 +2,8 @@ package com.booklog.domain.log;
 
 import com.booklog.domain.log.domain.Log;
 import com.booklog.domain.log.dao.LogRepository;
-import com.booklog.domain.member.Member;
-import com.booklog.domain.member.MemberRepository;
+import com.booklog.domain.member.dao.MemberRepository;
+import com.booklog.domain.member.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
