@@ -30,10 +30,10 @@ class LogServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "content","public");
 
         long logId = logService.saveLog(logCreateDto,member);
         Log log = logRepository.findById(logId).get();
-        Assertions.assertThat(log.getAuthor()).isEqualTo("t");
+        Assertions.assertThat(log.getTitle()).isEqualTo("t");
     }
 }

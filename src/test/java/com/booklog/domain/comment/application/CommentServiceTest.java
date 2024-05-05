@@ -36,7 +36,7 @@ class CommentServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "content","public");
 
         Long logId = logService.saveLog(logCreateDto,member);
 

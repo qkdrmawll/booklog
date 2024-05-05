@@ -36,7 +36,7 @@ class LikeServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "content","public");
 
         long logId = logService.saveLog(logCreateDto,member);
         Log log = logRepository.findById(logId).orElseThrow();
@@ -54,7 +54,7 @@ class LikeServiceTest {
                 .build();
         long memberId = memberRepository.save(member).getId();
 
-        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "content","public");
 
         long logId = logService.saveLog(logCreateDto,member);
         Log log = logRepository.findById(logId).orElseThrow();
@@ -73,7 +73,7 @@ class LikeServiceTest {
                 .build();
         memberRepository.save(member);
 
-        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "public");
+        LogCreateDto logCreateDto = new LogCreateDto("t","t","t","t", "content","public");
 
         long logId = logService.saveLog(logCreateDto,member);
         Log log = logRepository.findById(logId).orElseThrow();
