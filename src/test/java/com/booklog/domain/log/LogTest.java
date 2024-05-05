@@ -1,5 +1,7 @@
 package com.booklog.domain.log;
 
+import com.booklog.domain.book.dao.BookRepository;
+import com.booklog.domain.book.domain.Book;
 import com.booklog.domain.log.domain.Log;
 import com.booklog.domain.log.dao.LogRepository;
 import com.booklog.domain.member.dao.MemberRepository;
@@ -19,6 +21,8 @@ class LogTest {
     LogRepository logRepository;
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    BookRepository bookRepository;
 
 
     @Test
@@ -31,11 +35,17 @@ class LogTest {
                 .build();
         memberRepository.save(member);
 
+        Book book = Book.builder()
+                .title("booktitle")
+                .authors("bookauthor")
+                .thumbnail("bookthumbnail")
+                .build();
+        bookRepository.save(book);
+
         Log log = Log.builder()
                 .member(member)
                 .title("test")
-                .author("test")
-                .bookName("test")
+                .book(book)
                 .content("teeest")
                 .build();
         long id = logRepository.save(log).getId();
