@@ -53,12 +53,12 @@ public class BookController {
 
         // documents의 각 요소에 대해 반복합니다.
         for (Map<String, Object> document : documents) {
+            List<String> authorList = (List<String>) document.get("authors");
+            String authors = authorList.toString().replace("[","").replace("]","");
             Book book = Book.builder()
                     .title((String) document.get("title"))
-                    .authors((List<String>) document.get("authors"))
-                    .contents((String) document.get("contents"))
+                    .authors(authors)
                     .publisher((String) document.get("publisher"))
-                    .price((int) document.get("price"))
                     .thumbnail((String) document.get("thumbnail"))
                     .build();
             books.add(book);

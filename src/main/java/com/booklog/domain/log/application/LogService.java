@@ -1,5 +1,7 @@
 package com.booklog.domain.log.application;
 
+import com.booklog.domain.book.application.BookService;
+import com.booklog.domain.book.domain.Book;
 import com.booklog.domain.log.dao.LogRepository;
 import com.booklog.domain.log.domain.Log;
 import com.booklog.domain.log.domain.Visibility;
@@ -14,11 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class LogService {
-    private final MemberRepository memberRepository;
     private final LogRepository logRepository;
+    private final BookService bookService;
     public long saveLog(LogCreateDto logCreateDto, Member member) {
+        Book book = bookService.saveBook(logCreateDto.bookName(),
+                logCreateDto.author(),
+                logCreateDto.thumbnail());
+
         Visibility visibility;
-        System.out.println(logCreateDto.visibility());
         if (logCreateDto.visibility().equals("private")) {
             visibility = Visibility.PRIVATE;
         } else if (logCreateDto.visibility().equals("public")) {
@@ -28,8 +33,7 @@ public class LogService {
         Log log = Log.builder()
                 .title(logCreateDto.title())
                 .member(member)
-                .bookName(logCreateDto.bookName())
-                .author(logCreateDto.author())
+                .book(book)
                 .content(logCreateDto.content())
                 .visibility(visibility)
                 .build();

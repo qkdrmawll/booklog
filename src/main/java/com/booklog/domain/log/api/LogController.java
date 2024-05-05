@@ -32,9 +32,14 @@ public class LogController {
     @GetMapping("/write")
     public String logForm(@RequestParam(name = "bookName", required = false) String bookName,
                           @RequestParam(name = "author", required = false) String author,
+                          @RequestParam(name = "thumbnail", required = false) String thumbnail,
                           Model model) {
+        log.debug("bookName = {}", bookName);
+        log.debug("author = {}", author);
+        log.debug("thumbnail = {}", thumbnail);
         model.addAttribute("bookName", bookName);
         model.addAttribute("author", author);
+        model.addAttribute("thumbnail",thumbnail);
         return "addPost";
     }
 
@@ -43,12 +48,13 @@ public class LogController {
     public String addLog(LogCreateDto logCreateDto){
         SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
         Member member = memberRepository.findByEmail(sessionUser.getEmail());
-        logService.saveLog(logCreateDto, member);
-
         System.out.println("bookTitle = " + logCreateDto.bookName());
         System.out.println("bookAuthor = " + logCreateDto.author());
         System.out.println("logTitle = " + logCreateDto.title());
         System.out.println("logContent = " + logCreateDto.content());
+        System.out.println("thumbnail() = " + logCreateDto.thumbnail());
+        logService.saveLog(logCreateDto, member);
+
         return "redirect:/";
     }
 

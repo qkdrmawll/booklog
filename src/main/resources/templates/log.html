@@ -120,12 +120,12 @@
                     <div class="vertical-line"></div>
                 </div>
                 <div class="col-md-3">
-                    <img th:src="${log.thumbnail}" alt="Book Thumbnail" class="book-thumbnail">
+                    <img th:src="${log.book.thumbnail}" alt="Book Thumbnail" class="book-thumbnail">
                     <div class="book-info">
-                        <p th:text="${log.getBookName()}">
+                        <p th:text="${log.book.title}">
                             책 제목
                         </p>
-                        <p th:text="${log.getAuthor()}">
+                        <p th:text="${log.book.authors}">
                             저자
                         </p>
                     </div>

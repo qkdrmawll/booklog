@@ -1,6 +1,7 @@
 package com.booklog.domain.log.domain;
 
 import com.booklog.BaseEntity;
+import com.booklog.domain.book.domain.Book;
 import com.booklog.domain.comment.domain.Comment;
 import com.booklog.domain.member.domain.Member;
 import jakarta.persistence.*;
@@ -32,17 +33,13 @@ public class Log extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String title;
 
-    @Column(length = 500, nullable = false)
-    private String bookName;
-
-    @Column(length = 100, nullable = false)
-    private String author;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @Column(length = 5000, nullable = false)
     private String content;
 
-    @Column(length = 100)
-    private String thumbnail;
 
     @Column(name = "likes_count")
     private long likesCount;
@@ -54,18 +51,16 @@ public class Log extends BaseEntity {
     private int viewCount;
 
     @Builder
-    public Log(Member member, String title, String bookName, String author,String content) {
+    public Log(Member member, String title, Book book, String content) {
         this.member = member;
         this.title = title;
-        this.bookName = bookName;
-        this.author = author;
+        this.book = book;
         this.content = content;
     }
 
-    public void updateLog(String title, String bookName, String author,String content) {
+    public void updateLog(String title, Book book, String content) {
         this.title = title;
-        this.bookName = bookName;
-        this.author = author;
+        this.book = book;
         this.content = content;
     }
 

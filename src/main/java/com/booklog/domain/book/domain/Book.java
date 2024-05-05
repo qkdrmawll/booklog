@@ -1,18 +1,20 @@
 package com.booklog.domain.book.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.List;
 @Getter
-@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Book {
-    private List<String> authors;
-    private String contents;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(nullable = false)
     private String title;
+    private String authors;
     private String publisher;
-    private int price;
     private String thumbnail;
 }
