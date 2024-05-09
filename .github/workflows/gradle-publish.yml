@@ -14,6 +14,8 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: booklog-build
+  CODE_DEPLOY_APPLICATION_NAME: booklog
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: booklog-group
 
 jobs:
   build:
@@ -54,3 +56,11 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         ./$GITHUB_SHA.zip s3://booklog-build/$GITHUB_SHA.zip
+
+    - name: Code Deploy
+      run: | 
+        aws deploy create-deployment \
+        --deployment-config-name CodeDeployDefault.AllAtOnce \
+        --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+        --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
